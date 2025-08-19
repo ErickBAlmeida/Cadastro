@@ -4,6 +4,7 @@ import tkinter as tk
 from index import bd
 
 bd = bd()
+bd.criarBD()
 
 janela=tk.Tk()
 janela.title("Cadastro de alunos")#título da janela

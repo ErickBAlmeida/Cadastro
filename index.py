@@ -8,12 +8,15 @@ class bd:
         self.banco= sqlite3.connect('cadastroBD.bd')
         self.cursor=self.banco.cursor()
 
-        self.criarBD()
-
     def criarBD(self):
-        sql='CREATE TABLE IF NOT EXISTS tabelaAlunos(matricula INTEGER PRIMARY KEY, nome TEXT, curso TEXT, email TEXT)'
+        sql='''CREATE TABLE IF NOT EXISTS tabelaAlunos(
+                    matricula INTEGER PRIMARY KEY,
+                    nome TEXT,
+                    curso TEXT,
+                    email TEXT
+            )'''
+
         self.cursor.execute(sql)
-        self.cursor.fetchall()
         self.banco.commit()
 
     def inserirAlunos(self, matricula, nome, curso, email):
@@ -23,8 +26,9 @@ class bd:
 
     def apagarAlunos(self, infodel):
         self.cursor.execute("DELETE from tabelaAlunos where matricula="+str(infodel)+"")
+        self.cursor.execute("DELETE FROM tabelaAlunos WHERE matricula = ?", (infodel,))
         self.banco.commit()
 
     def __del__(self):
-        self.banco.close()
         self.cursor.close()
+        self.banco.close()
